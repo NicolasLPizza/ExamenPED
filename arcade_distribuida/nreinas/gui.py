@@ -1,41 +1,57 @@
+# nreinas/gui.py
 import threading
-from cliente_comun.comunicaciones import ClienteServidor
+import pygame
+from cliente_comun.utils import enviar_resultado
+from nreinas.juego import Tablero  # tu clase de lógica de N-Reinas
 
-def enviar_resultado(juego: str, datos: dict):
-    """
-    Construye el mensaje y lo envía al servidor en un hilo aparte.
+class NReinasGUI:
+    def __init__(self, N):
+        pygame.init()
+        self.N = N
+        self.tablero = Tablero(N)
+        self.intentos = 0
+        self.exito = False
+        self.size = 600
+        self.screen = pygame.display.set_mode((self.size, self.size))
+        pygame.display.set_caption(f"N-Reinas (N={N})")
+        self.cell = self.size // N
 
-    juego: 'nreinas', 'caballo' o 'hanoi'
-    datos: diccionario específico de cada juego
-    """
-    mensaje = {"juego": juego, "accion": "resultado", "datos": datos}
+    def run(self):
+        running = True
+        while running:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    running = False
+                elif event.type == pygame.MOUSEBUTTONDOWN and not self.exito:
+                    x, y = event.pos
+                    fila, col = y // self.cell, x // self.cell
+                    if self.tablero.colocar_reina(fila, col):
+                        self.intentos += 1
+                        if self.tablero.completado():
+                            self.exito = True
+                            threading.Thread(
+                                target=lambda: enviar_resultado('nreinas', {
+                                    'N': self.N,
+                                    'resuelto': True,
+                                    'movimientos': self.intentos
+                                }),
+                                daemon=True
+                            ).start()
+            self._draw()
+        pygame.quit()
 
-    def _worker(msg):
-        client = ClienteServidor()
-        try:
-            client.conectar()
-            client.enviar(msg)
-            resp = client.recibir()
-            print(f"Servidor respondió ({juego}): {resp}")
-        except Exception as e:
-            print(f"Error enviando resultado de {juego}: {e}")
-        finally:
-            client.cerrar()
+    def _draw(self):
+        self.screen.fill((255,255,255))
+        for i in range(self.N+1):
+            pygame.draw.line(self.screen, (0,0,0), (i*self.cell,0), (i*self.cell,self.size))
+            pygame.draw.line(self.screen, (0,0,0), (0,i*self.cell), (self.size,i*self.cell))
+        for (r,c) in self.tablero.reinas:
+            pygame.draw.circle(self.screen, (200,0,0),
+                               (c*self.cell + self.cell//2, r*self.cell + self.cell//2),
+                               self.cell//3)
+        pygame.display.flip()
 
-    threading.Thread(target=_worker, args=(mensaje,), daemon=True).start()
-
-
-# 2) Integración en nreinas/gui.py
-# Coloca este bloque justo cuando detectas fin de partida:
-
-# Variables de tu lógica de juego:
-#   tablero_N: int
-#   partida_resuelta: bool
-#   total_intentos: int
-
-datos_nreinas = {
-    "N": tablero_N,
-    "resuelto": partida_resuelta,
-    "movimientos": total_intentos
-}
-enviar_resultado('nreinas', datos_nreinas)
+if __name__ == '__main__':
+    N = int(input("Tamaño del tablero N: "))
+    gui = NReinasGUI(N)
+    gui.run()
