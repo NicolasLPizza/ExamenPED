@@ -1,4 +1,3 @@
-# caballo/juego.py
 class KnightTour:
     """
     Lógica para el Knight's Tour (Recorrido del Caballo).

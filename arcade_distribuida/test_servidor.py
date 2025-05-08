@@ -1,7 +1,7 @@
 # test_servidor.py
 
 import socket
-import json
+
 
 HOST = 'localhost'
 PORT = 5000

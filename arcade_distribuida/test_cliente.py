@@ -1,5 +1,3 @@
-# test_cliente.py
-
 from cliente_comun.comunicaciones import ClienteServidor
 
 if __name__ == '__main__':

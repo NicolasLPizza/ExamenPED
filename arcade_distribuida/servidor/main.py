@@ -1,5 +1,3 @@
-# servidor/main.py
-
 from servidor.modelos import Base, engine
 from servidor.comunicaciones import ServidorTCP
 import servidor.config as cfg

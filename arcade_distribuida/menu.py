@@ -1,4 +1,3 @@
-# menu.py
 """
 Menú principal con Pygame para seleccionar uno de los tres juegos,
 probar conexión al servidor y comprobar la base de datos.

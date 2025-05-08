@@ -1,4 +1,3 @@
-# servidor/modelos.py
 from sqlalchemy import Column, Integer, Boolean, String, DateTime, create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker

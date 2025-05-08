@@ -1,4 +1,3 @@
-# cliente_comun/utils.py
 """
 Funciones de utilidad compartidas por los clientes.
 """

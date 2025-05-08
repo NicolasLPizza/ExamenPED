@@ -1,4 +1,3 @@
-# hanoi/gui.py
 import threading
 import pygame
 from cliente_comun.utils import enviar_resultado

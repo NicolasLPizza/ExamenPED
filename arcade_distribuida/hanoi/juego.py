@@ -1,4 +1,3 @@
-# hanoi/juego.py
 class Hanoi:
     """
     Lógica para el juego de las Torres de Hanói.

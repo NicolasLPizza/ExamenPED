@@ -3,8 +3,7 @@
 
 from cliente_comun.config import HOST, PORT
 from cliente_comun.comunicaciones import ClienteServidor
-import json
-import socket
+
 
 
 def enviar_test(juego: str, datos: dict):

@@ -1,4 +1,3 @@
-# caballo/gui.py
 import threading
 import pygame
 from cliente_comun.utils import enviar_resultado
@@ -77,17 +76,17 @@ class KnightTourGUI:
             for c in range(self.N):
                 color = LIGHT_COLOR if (r + c) % 2 == 0 else DARK_COLOR
                 pygame.draw.rect(self.screen, color, (c*self.cell, r*self.cell, self.cell, self.cell))
-        # draw path
+        # camino recorrido
         for pos in self.tour.recorrido:
             r, c = pos
             pygame.draw.circle(self.screen, PATH_COLOR,
                                (c*self.cell + self.cell//2, r*self.cell + self.cell//2), self.cell//6)
-        # draw knight
+        # dibujo del caballo (punto rojo)
         if self.tour.recorrido:
             r, c = self.tour.recorrido[-1]
             pygame.draw.circle(self.screen, KNIGHT_COLOR,
                                (c*self.cell + self.cell//2, r*self.cell + self.cell//2), self.cell//3)
-        # draw message
+        # mensaje de victoria o derrota 
         if self.completo or self.dead_end:
             msg = "¡Completado!" if self.completo else "No hay más movimientos"
             text_surf = self.font.render(msg, True, (0,0,0))

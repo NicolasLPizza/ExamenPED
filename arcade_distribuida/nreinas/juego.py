@@ -1,4 +1,3 @@
-# nreinas/juego.py
 class Tablero:
     """
     Lógica para el puzzle de las N-Reinas.
