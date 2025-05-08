@@ -95,5 +95,5 @@ A continuación se detalla cómo y dónde se cumplen los apartados solicitados p
 
    * `test_cliente.py`, `test_envio_juegos.py` y `test_db.py` para validar comunicación y persistencia.
 
-Con este apartado, queda claro dónde se implementa cada requisito de la práctica.
+
 
