@@ -1,0 +1,78 @@
+Incluye las dependencias necesarias para que el proyecto funcione correctamente:
+
+pygame>=2.1.0
+SQLAlchemy>=1.4.0
+
+Instrucciones y consideraciones
+
+Este documento recoge los puntos clave para ejecutar y probar el sistema distribuido de la Máquina Arcade.
+
+1. Entorno de Python
+
+Crea y activa un entorno virtual:
+
+python3 -m venv venv
+source venv/bin/activate    # En Windows: venv\Scripts\activate
+
+Instala las dependencias:
+
+pip install SQLAlchemy
+
+2. Arranque del servidor
+
+En una terminal, sitúate en la raíz del proyecto con un cd (arcade_distribuida/) y ejecuta:
+
+python -m servidor.main
+
+Deberías ver:
+
+Servidor TCP escuchando en localhost:5000…
+
+3. Ejecución de GUIs desde el menú Pygame
+
+Ejecuta el menú principal:
+
+python menu.py
+
+Selecciona uno de los juegos (N‑Reinas, Knight’s Tour, Torres de Hanói). Cada uno se abrirá en su propia ventana.
+
+Para N‑Reinas y Hanói, aparecerá primero una caja de entrada Pygame para introducir N o el número de discos.
+
+4. Pruebas de conexión y BD (desde el menú)
+
+En el menú encontrarás dos botones adicionales:
+
+Probar Servidor: verifica la conexión TCP al servidor. Muestra un diálogo de éxito o error.
+
+Comprobar BD: ejecuta internamente test_db.py y muestra un resumen de las tablas y el número de registros.
+
+5. Pruebas manuales (línea de comandos)
+
+Test de cliente genérico (N-Reinas):
+
+python test_cliente.py
+
+Debe responder { 'status': 'ok' }.
+
+Envio de prueba Caballo y Hanói:
+
+python test_envio_juegos.py
+
+Debe mostrar respuesta {'status':'ok'} para cada uno.
+
+Ver contenido de BD:
+
+python test_db.py
+
+Imprime tablas nreinas, caballo, hanoi y sus filas.
+
+6. Cierre automático de juegos
+
+Cada GUI se cierra automáticamente tras mostrar el mensaje de victoria o "no hay más movimientos":
+
+N‑Reinas: cuando se completa o no quedan opciones.
+
+Knight’s Tour: al cubrir todo el tablero o al llegar a un dead end.
+
+Torres de Hanói: al resolver el puzzle.
+
